@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     digitalocean = {
-      source = "digitalocean/digitalocean"
+      source  = "digitalocean/digitalocean"
       version = "~> 2.0"
     }
   }
@@ -20,17 +20,10 @@ provider "digitalocean" {
 }
 
 provider "kubernetes" {
-  host = digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.host
+  host  = digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.host
   token = digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.token
 
   client_certificate     = base64decode(digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.client_certificate)
   client_key             = base64decode(digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.client_key)
   cluster_ca_certificate = base64decode(digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.cluster_ca_certificate)
-
-}
-
-resource "kubernetes_namespace" "wordpress" {
-  metadata {
-    name = var.namespace
-  }
 }

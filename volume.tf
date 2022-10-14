@@ -1,7 +1,7 @@
 resource "kubernetes_persistent_volume_claim" "mysql" {
   metadata {
     name = "wp-mysql-pvc"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.wordpress.metadata.0.name
   }
   spec {
     access_modes     = ["ReadWriteOnce"]
@@ -17,7 +17,7 @@ resource "kubernetes_persistent_volume_claim" "mysql" {
 resource "kubernetes_persistent_volume_claim" "wordpress" {
   metadata {
     name = "wp-wordpress-pvc"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.wordpress.metadata.0.name
   }
   spec {
     access_modes     = ["ReadWriteOnce"]

@@ -1,9 +1,9 @@
 resource "kubernetes_service" "wordpress" {
   metadata {
     name      = "wordpress"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.wordpress.metadata.0.name
     labels = {
-      app  = "wordpress"
+      app = "wordpress"
     }
   }
   spec {
@@ -12,7 +12,7 @@ resource "kubernetes_service" "wordpress" {
     }
     selector = {
       app  = "wordpress"
-      tier    = "frontend"
+      tier = "frontend"
     }
     type = "LoadBalancer"
   }
@@ -21,21 +21,20 @@ resource "kubernetes_service" "wordpress" {
 resource "kubernetes_replication_controller" "wordpress" {
   metadata {
     name      = "wordpress"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.wordpress.metadata.0.name
     labels = {
-      app  = "wordpress"
+      app = "wordpress"
     }
   }
   spec {
     selector = {
-      app  = "wordpress"
-      tier    = "frontend"
+      app = "wordpress"
     }
     template {
       metadata {
         labels = {
           app  = "wordpress"
-          tier    = "frontend"
+          tier = "frontend"
         }
       }
       spec {
@@ -57,20 +56,20 @@ resource "kubernetes_replication_controller" "wordpress" {
               }
             }
           }
-          
+
           env {
-            name = "WORDPRESS_DB_USER"
-            value = "wordpress"
+            name  = "WORDPRESS_DB_USER"
+            value = "root"
           }
 
           env {
-            name = "WORDPRESS_DB_NAME"
+            name  = "WORDPRESS_DB_NAME"
             value = "wordpress"
           }
 
           port {
             container_port = 80
-            name = "wordpress"
+            name           = "wordpress"
           }
 
           volume_mount {

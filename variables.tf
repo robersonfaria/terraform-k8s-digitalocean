@@ -1,17 +1,52 @@
+variable "cluster_name" {
+  default     = "my-cluster"
+  type        = string
+  description = "Nome do cluster Kubernetes"
+}
+
+variable "cluster_version" {
+  default     = "1.24.4-do.0"
+  type        = string
+  description = "Versão do cluster Kubernetes"
+}
+
+variable "region" {
+  default     = "nyc1"
+  type        = string
+  description = "Sigla da região onde será implantado o cluster Kubernetes"
+}
+
 variable "namespace" {
-  type = string
+  default     = "my-app"
+  type        = string
+  description = "Nome do name space utilizado para implantação das applicações"
+}
+
+variable "default_node_instances_size" {
+  default     = "s-1vcpu-2gb"
+  type        = string
+  description = "Tamanho das instancias utilizadas para compor o poll de nodes default do cluster"
+}
+
+variable "default_node_instances_quantity" {
+  default     = 3
+  type        = number
+  description = "Qauntidade de instancias utilizadas para compor o poll de nodes default do cluste(é recomendado um mínimo de 3)"
 }
 
 variable "mysql_version" {
-  type    = string
-  default = "8.0.31"
+  default     = "8.0.31"
+  type        = string
+  description = "Versão do MySql que será utilizado"
 }
 
 variable "mysql_password" {
-  type = string
+  type        = string
+  description = "Senha do usuário root do banco de dados MySql"
 }
 
 variable "wordpress_version" {
-  type = string
-  default = "6.0.2"
+  default     = "6.0.2"
+  type        = string
+  description = "Versão do Wordpress que será implantado"
 }

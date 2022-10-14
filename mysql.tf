@@ -1,7 +1,7 @@
 resource "kubernetes_service" "mysql" {
   metadata {
-    name      = "wordpress-mysql"
-    namespace = var.namespace
+    name      = "mysql"
+    namespace = kubernetes_namespace.wordpress.metadata.0.name
     labels = {
       app = "wordpress"
     }
@@ -20,8 +20,8 @@ resource "kubernetes_service" "mysql" {
 
 resource "kubernetes_replication_controller" "mysql" {
   metadata {
-    name      = "wordpress-mysql"
-    namespace = var.namespace
+    name      = "mysql"
+    namespace = kubernetes_namespace.wordpress.metadata.0.name
     labels = {
       service = "apps"
     }
@@ -29,7 +29,6 @@ resource "kubernetes_replication_controller" "mysql" {
   spec {
     selector = {
       app = "wordpress"
-
     }
     template {
       metadata {
@@ -54,28 +53,13 @@ resource "kubernetes_replication_controller" "mysql" {
           }
 
           env {
-            name = "MYSQL_PASSWORD"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret.mysql.metadata.0.name
-                key  = "password"
-              }
-            }
-          }
-          
-          env {
-            name = "MYSQL_USER"
-            value = "wordpress"
-          }
-
-          env {
-            name = "MYSQL_DATABASE"
+            name  = "MYSQL_DATABASE"
             value = "wordpress"
           }
 
           port {
             container_port = 3306
-            name = "mysql"
+            name           = "mysql"
           }
 
           volume_mount {
@@ -97,7 +81,7 @@ resource "kubernetes_replication_controller" "mysql" {
 resource "kubernetes_secret" "mysql" {
   metadata {
     name      = "mysql-pass"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.wordpress.metadata.0.name
   }
 
   data = {
