@@ -20,8 +20,13 @@ provider "digitalocean" {
 }
 
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
-  config_context = "do-nyc1-challenge"
+  host = digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.host
+  token = digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.token
+
+  client_certificate     = base64decode(digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.client_certificate)
+  client_key             = base64decode(digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(digitalocean_kubernetes_cluster.kubernetes_cluster.kube_config.0.cluster_ca_certificate)
+
 }
 
 resource "kubernetes_namespace" "wordpress" {
