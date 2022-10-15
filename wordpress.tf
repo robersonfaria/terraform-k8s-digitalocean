@@ -18,7 +18,7 @@ resource "kubernetes_service" "wordpress" {
   }
 }
 
-resource "kubernetes_replication_controller" "wordpress" {
+resource "kubernetes_deployment" "wordpress" {
   metadata {
     name      = "wordpress"
     namespace = kubernetes_namespace.wordpress.metadata.0.name
@@ -27,8 +27,12 @@ resource "kubernetes_replication_controller" "wordpress" {
     }
   }
   spec {
-    selector = {
-      app = "wordpress"
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "wordpress"
+      }
     }
     template {
       metadata {
@@ -44,7 +48,7 @@ resource "kubernetes_replication_controller" "wordpress" {
 
           env {
             name  = "WORDPRESS_DB_HOST"
-            value = "wordpress-mysql"
+            value = "mysql"
           }
 
           env {
@@ -59,7 +63,7 @@ resource "kubernetes_replication_controller" "wordpress" {
 
           env {
             name  = "WORDPRESS_DB_USER"
-            value = "root"
+            value = "wordpress"
           }
 
           env {
@@ -76,6 +80,13 @@ resource "kubernetes_replication_controller" "wordpress" {
             name       = "wordpress-persistent-storage"
             mount_path = "/var/www/html"
           }
+
+          # liveness_probe {
+          #   http_get {
+          #     path = "/"
+          #     port = 80
+          #   }
+          # }
         }
 
         volume {

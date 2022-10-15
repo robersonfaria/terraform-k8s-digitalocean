@@ -42,6 +42,11 @@ variable "mysql_version" {
 
 variable "mysql_password" {
   type        = string
+  description = "Senha do usuário wordpress do banco de dados MySql"
+}
+
+variable "mysql_root_password" {
+  type        = string
   description = "Senha do usuário root do banco de dados MySql"
 }
 

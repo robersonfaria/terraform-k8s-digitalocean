@@ -18,7 +18,7 @@ resource "kubernetes_service" "mysql" {
   }
 }
 
-resource "kubernetes_replication_controller" "mysql" {
+resource "kubernetes_deployment" "mysql" {
   metadata {
     name      = "mysql"
     namespace = kubernetes_namespace.wordpress.metadata.0.name
@@ -27,8 +27,12 @@ resource "kubernetes_replication_controller" "mysql" {
     }
   }
   spec {
-    selector = {
-      app = "wordpress"
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "wordpress"
+      }
     }
     template {
       metadata {
@@ -47,9 +51,24 @@ resource "kubernetes_replication_controller" "mysql" {
             value_from {
               secret_key_ref {
                 name = kubernetes_secret.mysql.metadata.0.name
+                key  = "root_password"
+              }
+            }
+          }
+
+          env {
+            name = "MYSQL_PASSWORD"
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret.mysql.metadata.0.name
                 key  = "password"
               }
             }
+          }
+
+          env {
+            name  = "MYSQL_USER"
+            value = "wordpress"
           }
 
           env {
@@ -66,7 +85,14 @@ resource "kubernetes_replication_controller" "mysql" {
             name       = "mysql-persistent-storage"
             mount_path = "/var/lib/mysql"
           }
+
+          liveness_probe {
+            exec {
+              command = ["mysqladmin", "-uroot", "-p${var.mysql_root_password}", "ping"]
+            }
+          }
         }
+
         volume {
           name = "mysql-persistent-storage"
           persistent_volume_claim {
@@ -86,5 +112,6 @@ resource "kubernetes_secret" "mysql" {
 
   data = {
     password = var.mysql_password
+    root_password = var.mysql_root_password
   }
 }
