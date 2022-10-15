@@ -59,6 +59,8 @@ dos componentes utilizados.
 
 # Changelog
 
+* 1.1.0<br/>- Versão final
+
 * 1.0.2<br/>- Alterado para utilizar deployment segundo [recomendação da documentação](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#:~:text=Note%3A%20A%20Deployment%20that%20configures,is%20always%20up%20and%20available)<br/>- Corrigido bug na alteração do mysql hostname
 
 
