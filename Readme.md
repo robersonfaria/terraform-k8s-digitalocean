@@ -43,7 +43,9 @@ terraform apply
 | mysql_version | Versão do MySql que será utilizado | string | 8.0.31 |
 | mysql_password | Senha do usuário wordpress do banco de dados MySql | string |  |
 | mysql_root_password | Senha do usuário root do banco de dados MySql | string |  |
+| mysql_volume_size | Tamanho do volume disponível para o container do MySql | string | "6.0.2" |
 | wordpress_version | Versão do Wordpress que será implantado | string | 6.0.2 |
+| wordpress_volume_size | Tamanho do volume disponível para o container do Wordpress | string | "6.0.2" |
 
 
 # Changelog

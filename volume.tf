@@ -8,7 +8,7 @@ resource "kubernetes_persistent_volume_claim" "mysql" {
     storage_class_name = "do-block-storage"
     resources {
       requests = {
-        storage = "10Gi"
+        storage = var.mysql_volume_size
       }
     }
   }
@@ -24,7 +24,7 @@ resource "kubernetes_persistent_volume_claim" "wordpress" {
     storage_class_name = "do-block-storage"
     resources {
       requests = {
-        storage = "10Gi"
+        storage = var.wordpress_volume_size
       }
     }
   }

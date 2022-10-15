@@ -50,8 +50,20 @@ variable "mysql_root_password" {
   description = "Senha do usuário root do banco de dados MySql"
 }
 
+variable "mysql_volume_size" {
+  default     = "10Gi"
+  type        = string
+  description = "Tamanho do volume disponível para o container do MySql"
+}
+
 variable "wordpress_version" {
   default     = "6.0.2"
   type        = string
   description = "Versão do Wordpress que será implantado"
+}
+
+variable "wordpress_volume_size" {
+  default     = "10Gi"
+  type        = string
+  description = "Tamanho do volume disponível para o container do Wordpress"
 }
