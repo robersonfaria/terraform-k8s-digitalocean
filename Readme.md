@@ -47,12 +47,9 @@ terraform apply
 
 # Changelog
 
-* 1.0.2 - Alterado para utilizar deployment segundo [recomendação da documentação](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#:~:text=Note%3A%20A%20Deployment%20that%20configures,is%20always%20up%20and%20available)
-        - Corrigido bug na alteração do mysql hostname
+* 1.0.2 - Alterado para utilizar deployment segundo [recomendação da documentação](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#:~:text=Note%3A%20A%20Deployment%20that%20configures,is%20always%20up%20and%20available)  - Corrigido bug na alteração do mysql hostname
 
 
-* 1.0.1 - Organização geral do código
-        - Criação de variáveis
-        - Criação de private VPC
+* 1.0.1 - Organização geral do código  - Criação de variáveis  - Criação de private VPC
 
 * 1.0.0 - Primeira versão apenas com a app funcionando para validar a POC
