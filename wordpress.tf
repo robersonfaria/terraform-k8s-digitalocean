@@ -80,13 +80,13 @@ resource "kubernetes_deployment" "wordpress" {
             name       = "wordpress-persistent-storage"
             mount_path = "/var/www/html"
           }
-
-          # liveness_probe {
-          #   http_get {
-          #     path = "/"
-          #     port = 80
-          #   }
-          # }
+          
+          liveness_probe {
+            http_get {
+              path = "/"
+              port = 80
+            }
+          }
         }
 
         volume {

@@ -37,16 +37,25 @@ terraform apply
 | cluster_name | Nome do cluster Kubernetes | string | my-cluster |
 | cluster_version | Versão do cluster Kubernetes | string | 1.24.4-do.0 |
 | region | Sigla da região onde será implantado o cluster Kubernetes | string | nyc1 |
+| vpc_cird | CIRD Block da VPC | string | 10.118.0.0/20 |
 | namespace | Nome do name space utilizado para implantação das applicações | string | my-app |
 | default_node_instances_size | Tamanho das instancias utilizadas para compor o poll de nodes default do cluster | string | s-1vcpu-2gb |
 | default_node_instances_quantity | Qauntidade de instancias utilizadas para compor o poll de nodes default do cluste(é recomendado um mínimo de 3) | number | 3 |
 | mysql_version | Versão do MySql que será utilizado | string | 8.0.31 |
-| mysql_password | Senha do usuário wordpress do banco de dados MySql | string |  |
-| mysql_root_password | Senha do usuário root do banco de dados MySql | string |  |
+| mysql_password | Senha do usuário wordpress do banco de dados MySql | string | -- |
+| mysql_root_password | Senha do usuário root do banco de dados MySql | string | -- |
 | mysql_volume_size | Tamanho do volume disponível para o container do MySql | string | "6.0.2" |
 | wordpress_version | Versão do Wordpress que será implantado | string | 6.0.2 |
 | wordpress_volume_size | Tamanho do volume disponível para o container do Wordpress | string | "6.0.2" |
 
+# Observações
+
+- É possível transformar o MySql e o Wordpress em módulos terraform, porém devido a baixa complexidade do
+ambiente essa funcionalidade não iria trazer um grande benefício e adicionaria uma complexidade desnecessária.
+
+- Poderia ser utilizado módulos prontos do [Terraform Registry](https://registry.terraform.io/) para reduzir 
+a quantidade e até duplicidade de código, porem preferi deixar o código mais verboso para melhor entendimento
+dos componentes utilizados.
 
 # Changelog
 

@@ -10,6 +10,12 @@ variable "cluster_version" {
   description = "Versão do cluster Kubernetes"
 }
 
+variable "vpc_cird" {
+  default     = "10.118.0.0/20"
+  type        = string
+  description = "CIRD Block da VPC"
+}
+
 variable "region" {
   default     = "nyc1"
   type        = string
